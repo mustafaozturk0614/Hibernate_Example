@@ -1,6 +1,7 @@
 package com.bilgeadam.hibernateexample.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.TypedQuery;
 
@@ -40,14 +41,14 @@ public class UserDao implements ICrud<User> {
 		Session session = null;
 
 		try {
-			User user = findbyId(id);
+			Optional<User> user = findById(id);
 			if (user != null) {
-				user.setUsername(t.getUsername());
-				user.setGender(t.getGender());
-				user.setPassword(t.getPassword());
+				user.get().setUsername(t.getUsername());
+				user.get().setGender(t.getGender());
+				user.get().setPassword(t.getPassword());
 				session = databaseConnectionHibernate();
 				session.getTransaction().begin();
-				session.merge(user);
+				session.merge(user.get());
 				session.getTransaction().commit();
 
 				System.out.println("Kullanýcý Baþarýyla güncellendi");
@@ -66,14 +67,14 @@ public class UserDao implements ICrud<User> {
 		Session session = null;
 
 		try {
-			User user = findbyId(id);
+			Optional<User> user = findById(id);
 
 			if (user != null) {
 				session = databaseConnectionHibernate();
 				session.getTransaction().begin();
 				session.delete(user);
 				session.getTransaction().commit();
-				System.out.println(user.getUsername() + "silindi");
+				System.out.println(user.get().getUsername() + "silindi");
 			}
 
 		} catch (Exception e) {
@@ -105,19 +106,18 @@ public class UserDao implements ICrud<User> {
 		return null;
 	}
 
-	public User findbyId(long id) {
-		User user;
+	public Optional<User> findById(long id) {
+		User user = null;
 		Session session = null;
 		try {
 			session = HibernateUtils.getSessionFactory().openSession();
 			user = session.find(User.class, id);
 			if (user != null) {
 				System.out.println("user bulundu" + user);
-				return user;
 
 			} else {
 				System.out.println("user bulunamadý" + user);
-				return user;
+
 			}
 
 		} catch (Exception e) {
@@ -126,7 +126,7 @@ public class UserDao implements ICrud<User> {
 			session.close();
 		}
 
-		return null;
+		return Optional.ofNullable(user);
 	}
 
 }

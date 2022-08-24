@@ -1,6 +1,7 @@
 package com.bilgeadam.hibernateexample.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.Session;
 
@@ -16,7 +17,7 @@ public interface ICrud<T> {
 
 	List<T> findAll();
 
-	T findbyId(long id);
+	Optional<T> findById(long id);
 
 	default Session databaseConnectionHibernate() {
 

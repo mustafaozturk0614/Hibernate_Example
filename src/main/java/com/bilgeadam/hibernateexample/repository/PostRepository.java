@@ -11,17 +11,17 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bilgeadam.hibernateexample.entity.User;
+import com.bilgeadam.hibernateexample.entity.Post;
 import com.bilgeadam.hibernateexample.utility.HibernateUtils;
 
-public class UserRepository implements ICrud<User> {
+public class PostRepository implements ICrud<Post> {
 
 	private Session session;
 	private EntityManager entityManager;
 	private CriteriaBuilder criteriaBuilder;
 	private Transaction transaction;
 
-	public UserRepository() {
+	public PostRepository() {
 		entityManager = HibernateUtils.getSessionFactory().createEntityManager();
 		criteriaBuilder = entityManager.getCriteriaBuilder();
 	}
@@ -47,7 +47,7 @@ public class UserRepository implements ICrud<User> {
 	}
 
 	@Override
-	public void save(User t) {
+	public void save(Post t) {
 
 		try {
 			openSession();
@@ -62,7 +62,7 @@ public class UserRepository implements ICrud<User> {
 	}
 
 	@Override
-	public void update(User t, long id) {
+	public void update(Post t, long id) {
 		try {
 			openSession();
 			t.setId(id);
@@ -77,11 +77,11 @@ public class UserRepository implements ICrud<User> {
 
 	@Override
 	public void delete(long id) {
-		Optional<User> user = findById(id);
-		if (user.isPresent()) {
+		Optional<Post> post = findById(id);
+		if (post.isPresent()) {
 			try {
 				openSession();
-				session.delete(user.get());
+				session.delete(post.get());
 				successClose();
 
 			} catch (Exception e) {
@@ -94,25 +94,25 @@ public class UserRepository implements ICrud<User> {
 	}
 
 	@Override
-	public List<User> findAll() {
+	public List<Post> findAll() {
 
-		CriteriaQuery<User> criteria = criteriaBuilder.createQuery(User.class);
-		Root<User> root = criteria.from(User.class);
+		CriteriaQuery<Post> criteria = criteriaBuilder.createQuery(Post.class);
+		Root<Post> root = criteria.from(Post.class);
 		criteria.select(root);
 
 		return entityManager.createQuery(criteria).getResultList();
 	}
 
 	@Override
-	public Optional<User> findById(long id) {
-		User user = null;
-		CriteriaQuery<User> criteria = criteriaBuilder.createQuery(User.class);
-		Root<User> root = criteria.from(User.class);
+	public Optional<Post> findById(long id) {
+		Post post = null;
+		CriteriaQuery<Post> criteria = criteriaBuilder.createQuery(Post.class);
+		Root<Post> root = criteria.from(Post.class);
 		criteria.select(root);
 		criteria.where(criteriaBuilder.equal(root.get("id"), id));
 		try {
-			user = entityManager.createQuery(criteria).getSingleResult();
-			return Optional.of(user);
+			post = entityManager.createQuery(criteria).getSingleResult();
+			return Optional.of(post);
 		} catch (Exception e) {
 			return Optional.ofNullable(null);
 		}
