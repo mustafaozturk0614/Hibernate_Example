@@ -1,7 +1,14 @@
 package com.bilgeadam.hibernateexample.entity;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,17 +35,59 @@ public class User {
 	@Column(length = 32)
 	private String password;
 
-	private String gender;
+	@Enumerated(EnumType.STRING)
+	private EGender gender;
 
-	public User(String username, String password, String gender) {
+	@Embedded
+	private Name name;
+
+	@ElementCollection
+	Map<EAddressType, Address> address;
+
+	@ElementCollection
+	List<String> areasOfInterest;
+
+	public User(String username, String password, EGender gender) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.gender = gender;
 	}
 
+	public Name getName() {
+		return name;
+	}
+
+	public void setName(Name name) {
+		this.name = name;
+	}
+
+	public User(String username, String password, EGender gender, Name name) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.gender = gender;
+		this.name = name;
+	}
+
 	public User() {
 
+	}
+
+	public Map<EAddressType, Address> getAddress() {
+		return address;
+	}
+
+	public void setAddress(Map<EAddressType, Address> address) {
+		this.address = address;
+	}
+
+	public List<String> getAreasOfInterest() {
+		return areasOfInterest;
+	}
+
+	public void setAreasOfInterest(List<String> areasOfInterest) {
+		this.areasOfInterest = areasOfInterest;
 	}
 
 	public long getId() {
@@ -65,17 +114,18 @@ public class User {
 		this.password = password;
 	}
 
-	public String getGender() {
+	public EGender getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(EGender gender) {
 		this.gender = gender;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", gender=" + gender + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", gender=" + gender + ", name="
+				+ name + "]";
 	}
 
 }
