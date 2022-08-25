@@ -1,17 +1,12 @@
 package com.bilgeadam.hibernateexample.entity;
 
-import java.util.List;
-import java.util.Map;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /*
@@ -27,6 +22,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tbluser")
 public class User {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
@@ -35,70 +31,24 @@ public class User {
 	@Column(length = 32)
 	private String password;
 
-	@Enumerated(EnumType.STRING)
-	private EGender gender;
+	@OneToOne(cascade = CascadeType.ALL)
+	private UserDetail userDetail;
 
-	@Embedded
-	private Name name;
-
-	@ElementCollection
-	Map<EAddressType, Address> address;
-
-	@ElementCollection
-	List<String> areasOfInterest;
-
-	@Column(nullable = true)
-	private int postNumber;
-
-	public int getPostNumber() {
-		return postNumber;
-	}
-
-	public void setPostNumber(int postNumber) {
-		this.postNumber = postNumber;
-	}
-
-	public User(String username, String password, EGender gender) {
+	public User(String username, String password) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.gender = gender;
 	}
 
-	public Name getName() {
-		return name;
-	}
-
-	public void setName(Name name) {
-		this.name = name;
-	}
-
-	public User(String username, String password, EGender gender, Name name) {
+	public User(String username, String password, UserDetail userDetail) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.gender = gender;
-		this.name = name;
+		this.userDetail = userDetail;
 	}
 
 	public User() {
-
-	}
-
-	public Map<EAddressType, Address> getAddress() {
-		return address;
-	}
-
-	public void setAddress(Map<EAddressType, Address> address) {
-		this.address = address;
-	}
-
-	public List<String> getAreasOfInterest() {
-		return areasOfInterest;
-	}
-
-	public void setAreasOfInterest(List<String> areasOfInterest) {
-		this.areasOfInterest = areasOfInterest;
+		// TODO Auto-generated constructor stub
 	}
 
 	public long getId() {
@@ -125,18 +75,18 @@ public class User {
 		this.password = password;
 	}
 
-	public EGender getGender() {
-		return gender;
+	public UserDetail getUserDetail() {
+		return userDetail;
 	}
 
-	public void setGender(EGender gender) {
-		this.gender = gender;
+	public void setUserDetail(UserDetail userDetail) {
+		this.userDetail = userDetail;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", gender=" + gender + ", name="
-				+ name + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", userDetail=" + userDetail
+				+ "]";
 	}
 
 }

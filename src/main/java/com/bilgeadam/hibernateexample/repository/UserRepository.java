@@ -119,4 +119,41 @@ public class UserRepository implements ICrud<User> {
 
 	}
 
+	public void startLike(String value) {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
+
+		Root<User> root = query.from(User.class);
+
+//		query.select(root);
+
+//		query.where(criteriaBuilder.like(root.get("name").get("firstName"), value + "%"));
+//		String hql = "select u from User as u  where  u.name.firstName   like :x  ";
+		query.select(root).where(criteriaBuilder.like(root.get("name").get("firstName"), value + "%"));
+		List<User> users = entityManager.createQuery(query).getResultList();
+		users.forEach(System.out::println);
+	}
+	// post number 10dan buyuk olanlarý getiren bir fonksiyon like gt
+
+	public void gt(int number) {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
+		Root<User> root = query.from(User.class);
+
+		query.select(root).where(criteriaBuilder.gt(root.get("postNumber"), number));
+
+		List<User> users = entityManager.createQuery(query).getResultList();
+		users.forEach(System.out::println);
+	}
+
+	public void sumPost() {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> query = criteriaBuilder.createQuery(Long.class);
+		Root<User> root = query.from(User.class);
+		query.multiselect(criteriaBuilder.sum(root.get("postNumber")));
+		Long result = entityManager.createQuery(query).getSingleResult();
+		System.out.println(result);
+	}
+
 }

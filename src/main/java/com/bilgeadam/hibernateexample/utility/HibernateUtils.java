@@ -5,6 +5,7 @@ import org.hibernate.cfg.Configuration;
 
 import com.bilgeadam.hibernateexample.entity.Post;
 import com.bilgeadam.hibernateexample.entity.User;
+import com.bilgeadam.hibernateexample.entity.UserDetail;
 
 public class HibernateUtils {
 
@@ -19,6 +20,7 @@ public class HibernateUtils {
 			// Entity claslarýmýzý buraya ekliyoruz
 			configuration.addAnnotatedClass(User.class);
 			configuration.addAnnotatedClass(Post.class);
+			configuration.addAnnotatedClass(UserDetail.class);
 
 			SessionFactory factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
 
