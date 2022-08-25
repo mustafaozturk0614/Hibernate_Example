@@ -47,6 +47,17 @@ public class User {
 	@ElementCollection
 	List<String> areasOfInterest;
 
+	@Column(nullable = true)
+	private int postNumber;
+
+	public int getPostNumber() {
+		return postNumber;
+	}
+
+	public void setPostNumber(int postNumber) {
+		this.postNumber = postNumber;
+	}
+
 	public User(String username, String password, EGender gender) {
 		super();
 		this.username = username;

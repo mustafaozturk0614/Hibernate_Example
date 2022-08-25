@@ -44,17 +44,18 @@ public class UserController {
 
 //		userRepository.delete(7);
 
-		User user4 = new User("username4", "123", EGender.MAN, new Name("Mert", "", "Erenoğlu"));
+		User user4 = new User("username6", "123", EGender.MAN, new Name("Gökhan", "", "Gürel"));
 		Address address1 = new Address("Fatih cad", "Türkiye", "Ankara");
 		Address address2 = new Address("Barış Cad", "Türkiye", "Ankara");
 		Map<EAddressType, Address> map = new HashMap();
 		map.put(EAddressType.HOME, address1);
 		map.put(EAddressType.BUSINESS, address2);
 		List<String> interest = new ArrayList();
-		interest.add("Sinema");
+		interest.add("Tiyatro");
 		interest.add("Müzik");
 		user4.setAreasOfInterest(interest);
 		user4.setAddress(map);
+		user4.setPostNumber(15);
 		userDao.save(user4);
 
 	}
