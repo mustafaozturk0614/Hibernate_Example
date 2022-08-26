@@ -103,7 +103,7 @@ public class UserDetail {
 	@Override
 	public String toString() {
 		return "UserDetail [id=" + id + ", gender=" + gender + ", name=" + name + ", address=" + address
-				+ ", areasOfInterest=" + areasOfInterest + ", postNumber=" + postNumber + "]";
+				+ ", areasOfInterest=" + areasOfInterest + ", postNumber=" + postNumber + ", user=" + user + "]";
 	}
 
 }

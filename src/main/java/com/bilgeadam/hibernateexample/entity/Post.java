@@ -10,11 +10,14 @@ package com.bilgeadam.hibernateexample.entity;
 import java.util.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,11 +36,22 @@ public class Post {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(nullable = false, name = "user_id", referencedColumnName = "id")
+	private User user;
+
 	public Post(String content, Date createdDate) {
 		super();
 
 		this.content = content;
 		this.createdDate = createdDate;
+	}
+
+	public Post(String content, Date createdDate, User user) {
+		super();
+		this.content = content;
+		this.createdDate = createdDate;
+		this.user = user;
 	}
 
 	public Post() {
@@ -66,6 +80,14 @@ public class Post {
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
