@@ -26,9 +26,11 @@ public class UserController2 {
 		List<String> interest = new ArrayList();
 		interest.add("Tiyatro");
 		interest.add("Müzik");
-		UserDetail userDetail = new UserDetail(EGender.MAN, new Name("Mustafa", null, "Öztürk"), map, interest, 10);
-		User user = new User("musti", "123", userDetail);
+		UserDetail userDetail = new UserDetail(EGender.MAN, new Name("Mehmet", "Aras", "Gürel"), map, interest, 20);
+		User user = new User("arass", "123", userDetail);
 		userRepository.save(user);
+		userRepository.findAll().forEach(System.out::println);
+		;
 
 	}
 

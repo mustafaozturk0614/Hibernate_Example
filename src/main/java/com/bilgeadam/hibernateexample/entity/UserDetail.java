@@ -12,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class UserDetail {
@@ -34,6 +35,8 @@ public class UserDetail {
 
 	@Column(nullable = true)
 	private int postNumber;
+	@OneToOne(mappedBy = "userDetail")
+	private User user;
 
 	public UserDetail(EGender gender, Name name, Map<EAddressType, Address> address, List<String> areasOfInterest,
 			int postNumber) {

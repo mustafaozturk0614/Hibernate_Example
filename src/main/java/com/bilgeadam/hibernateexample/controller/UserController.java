@@ -48,10 +48,10 @@ public class UserController {
 //		user4.setPostNumber(15);
 //		userDao.save(user4);
 
-//		userRepository.findAll().forEach(System.out::println);
+		userRepository.findAll().forEach(System.out::println);
 
 //		userRepository.gt(10);
-		userRepository.sumPost();
+//		userRepository.sumPost();
 
 	}
 
